@@ -1,0 +1,51 @@
+{
+	"manifest_version": 2,
+	"name": "Netflix International",
+	"description": "Displays all available Netflix audio tracks.",
+	"version": "2.0.0",
+	"author": "shirt",
+	"browser_action": {
+	  "default_icon": "img/icon128.png"
+	},
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "netflix-international@shirt"
+		}
+	},
+	"icons": {
+	  "48": "img/icon48.png",
+	  "128": "img/icon128.png"
+	},
+	"content_scripts": [{
+	  "matches": [
+		"*://assets.nflxext.com/*/ffe/player/html/*",
+		"*://www.assets.nflxext.com/*/ffe/player/html/*",
+		"*://netflix.com/*",
+		"*://www.netflix.com/*"
+	  ],
+	  "all_frames": true,
+	  "js": ["content_script.js"],
+	  "run_at": "document_start"
+	}],
+	"background": {
+	  "scripts": ["background.js"]
+	},
+	"options_ui": {
+	  "page": "pages/options.html",
+	  "open_in_tab": false
+	},
+	"web_accessible_resources": [
+	  "cadmium-playercore-shim.js",
+	  "netflix_max_bitrate.js"
+	],
+	"permissions": [
+	  "storage",
+	  "webRequest",
+	  "webRequestBlocking",
+	  "*://assets.nflxext.com/*/ffe/player/html/*",
+	  "*://www.assets.nflxext.com/*/ffe/player/html/*",
+	  "*://netflix.com/*",
+	  "*://www.netflix.com/*"
+	]
+  }
+  
