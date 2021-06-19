@@ -90,13 +90,6 @@ do_patch(
 	"this.toggle();"
 );
 
-if (globalOptions.use6Channels) {
-	do_patch("Show channel indicator",
-	/displayName:([^\.]{1})\.([^,]{2}),/,
-	"displayName:$1.$2 + \" - \" + $1.channelsFormat,"
-	)
-}
-
 if (globalOptions.showAllTracks) {
 	do_patch("Show all audio tracks",
 		/"showAllSubDubTracks",!1/,
@@ -105,4 +98,4 @@ if (globalOptions.showAllTracks) {
 }
 
 // run our patched copy of playercore
-eval(cadmium_src);
+Function(cadmium_src)();
