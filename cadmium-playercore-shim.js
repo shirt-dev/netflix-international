@@ -1,4 +1,4 @@
-/* This script runs as a drop-in replacement of the original cadmium-playercore */
+// This script runs as a drop-in replacement of the original cadmium-playercore. This is not a content script.
 console.log("Netflix International script active!");
 
 // promisify chrome storage API for easier chaining
@@ -97,5 +97,5 @@ if (globalOptions.showAllTracks) {
 	)
 }
 
-// run our patched copy of playercore
-Function(cadmium_src)();
+// run our patched copy of playercore in a non-privileged context on the page
+window.Function(cadmium_src)();
