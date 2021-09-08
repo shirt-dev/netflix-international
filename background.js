@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // https://stackoverflow.com/a/45985333
 function getBrowser() {
 	if (typeof chrome !== "undefined") {
@@ -19,17 +20,15 @@ chrome.webRequest.onBeforeRequest.addListener(
 		}
 		
 		if (getBrowser() == "Chrome") {
-			return {
-				redirectUrl: chrome.extension.getURL("cadmium-playercore-shim.js")
-			};
+			return { redirectUrl: chrome.runtime.getURL("cadmium-playercore-shim.js") };
 		}
 		
 		/* Work around funky CORS behaviour on Firefox */
 		else if (getBrowser() == "Firefox") {
 			let filter = browser.webRequest.filterResponseData(details.requestId);
 			let encoder = new TextEncoder();
-			filter.onstop = event => {
-				fetch(browser.extension.getURL("cadmium-playercore-shim.js")).
+			filter.onstop = () => {
+				fetch(browser.runtime.getURL("cadmium-playercore-shim.js")).
 					then(response => response.text()).
 					then(text => {
 						filter.write(encoder.encode(text));

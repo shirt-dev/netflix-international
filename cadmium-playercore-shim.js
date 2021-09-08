@@ -1,17 +1,6 @@
+/* eslint-disable no-undef */
 // This script runs as a drop-in replacement of the original cadmium-playercore. This is not a content script.
 console.log("Netflix International script active!");
-
-// promisify chrome storage API for easier chaining
-function chromeStorageGet(opts) {
-    if (getBrowser() == "Firefox") {
-        return chrome.storage.sync.get(opts);
-    }
-    else {
-        return new Promise(resolve => {
-            chrome.storage.sync.get(opts, resolve);
-        });
-    }
-}
 
 function do_patch(desc, needle, replacement) {
 	var match = cadmium_src.match(needle);
@@ -35,8 +24,9 @@ request.send();
 
 var cadmium_src = request.responseText;
 
+// eslint-disable-next-line no-unused-vars
 function get_profile_list() {
-	custom_profiles = [
+	var custom_profiles = [
 		"playready-h264mpl30-dash",
 		"playready-h264mpl31-dash",
 		"playready-h264mpl40-dash",
@@ -82,11 +72,11 @@ do_patch(
 	"Custom profiles 2",
 	/(name:"default",profiles:).}/,
 	"$1 get_profile_list()}"
-)
+);
 
 do_patch(
 	"Re-enable Ctrl+Shift+Alt+S menu",
-	/this\...\....\s*\&\&\s*this\.toggle\(\);/,
+	/this\...\....\s*&&\s*this\.toggle\(\);/,
 	"this.toggle();"
 );
 
@@ -94,7 +84,7 @@ if (globalOptions.showAllTracks) {
 	do_patch("Show all audio tracks",
 		/"showAllSubDubTracks",!1/,
 		"\"showAllSubDubTracks\",!0"
-	)
+	);
 }
 
 // run our patched copy of playercore in a non-privileged context on the page

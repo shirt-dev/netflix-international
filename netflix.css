@@ -1,0 +1,14 @@
+/* Fixes audio and subtitle picker scrolling */
+
+.watch-video--selector-audio-subtitle {
+    display: flex;
+}
+
+div[data-uia="selector-audio-subtitle"] > div {
+    display: flex;
+    flex-direction: column;
+}
+
+div[data-uia="selector-audio-subtitle"] > div > ul {
+    overflow-y: scroll;
+}

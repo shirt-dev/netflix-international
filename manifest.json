@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Netflix International",
 	"description": "Displays all available Netflix audio tracks.",
-	"version": "2.0.2",
+	"version": "2.0.3",
 	"author": "shirt",
 	"browser_action": {
 	  "default_icon": "img/icon128.png"
@@ -24,6 +24,7 @@
 		"*://www.netflix.com/*"
 	  ],
 	  "all_frames": true,
+	  "css": ["netflix.css"],
 	  "js": ["content_script.js"],
 	  "run_at": "document_start"
 	}],
@@ -36,7 +37,8 @@
 	},
 	"web_accessible_resources": [
 	  "cadmium-playercore-shim.js",
-	  "netflix_max_bitrate.js"
+	  "netflix_max_bitrate.js",
+	  "netflix.css"
 	],
 	"permissions": [
 	  "storage",
