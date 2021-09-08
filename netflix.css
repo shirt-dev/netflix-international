@@ -10,5 +10,5 @@ div[data-uia="selector-audio-subtitle"] > div {
 }
 
 div[data-uia="selector-audio-subtitle"] > div > ul {
-    overflow-y: scroll;
+    overflow-y: auto;
 }
