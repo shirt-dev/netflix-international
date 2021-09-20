@@ -4,6 +4,10 @@
     display: flex;
 }
 
+div[data-uia="selector-audio-subtitle"] {
+    white-space: normal;
+}
+
 div[data-uia="selector-audio-subtitle"] > div {
     display: flex;
     flex-direction: column;
