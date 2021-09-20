@@ -12,3 +12,14 @@ div[data-uia="selector-audio-subtitle"] > div {
 div[data-uia="selector-audio-subtitle"] > div > ul {
     overflow-y: auto;
 }
+
+/* Make more tracks visible at once */
+
+div[data-uia="selector-audio-subtitle"] > div > h3 {
+    padding-bottom: 0.75rem;
+}
+
+div[data-uia="selector-audio-subtitle"] > div > ul > li {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
