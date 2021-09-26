@@ -46,6 +46,7 @@ chromeStorageGet({
 	showAllTracks: true,
 	setMaxBitrate: false,
 	disableVP9: false,
+	useDDPlus: false,
 }).then(items => {
 	// very messy workaround for accessing chrome storage outside of background / content scripts
 	let mainScript = document.createElement("script");

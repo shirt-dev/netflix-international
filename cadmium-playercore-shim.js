@@ -26,32 +26,79 @@ var cadmium_src = request.responseText;
 
 // eslint-disable-next-line no-unused-vars
 function get_profile_list() {
+	// Always add h264 profiles
 	var custom_profiles = [
 		"playready-h264mpl30-dash",
 		"playready-h264mpl31-dash",
 		"playready-h264mpl40-dash",
 		"playready-h264hpl30-dash",
 		"playready-h264hpl31-dash",
-		"playready-h264hpl40-dash",
-		"heaac-2-dash",
-		"heaac-2hq-dash",
+		"playready-h264hpl40-dash",	
+	];
+
+	if (window.MSMediaKeys) {
+		// Chromium Edge Specific
+
+		// Always add 2.0 AAC profiles, some manifests fail without them
+		custom_profiles = custom_profiles.concat([
+			"heaac-2-dash",
+			"heaac-2hq-dash",
+		]);
+
+		if (globalOptions.useDDPlus) {
+			// Dolby Digital
+			custom_profiles = custom_profiles.concat([
+				"ddplus-2.0-dash",
+			]);
+
+			if (globalOptions.use6Channels) {
+				custom_profiles = custom_profiles.concat([
+					"ddplus-5.1-dash",
+					"ddplus-5.1hq-dash",
+					"ddplus-atmos-dash",
+				]);
+			}
+		} else {
+			// No Dolby Digital
+			if (globalOptions.use6Channels) {
+				custom_profiles = custom_profiles.concat([
+					"heaac-5.1-dash",
+				]);
+			}
+		}
+
+		
+	} else {
+		// Chrome, Firefox Specific
+
+		if (!globalOptions.disableVP9) {
+			// Add VP9 Profiles if wanted
+			custom_profiles = custom_profiles.concat([
+				"vp9-profile0-L30-dash-cenc",
+				"vp9-profile0-L31-dash-cenc",
+				"vp9-profile0-L40-dash-cenc",
+			]);
+		}
+
+		custom_profiles = custom_profiles.concat([
+			"heaac-2-dash",
+			"heaac-2hq-dash",
+		]);
+
+		if (globalOptions.use6Channels) {
+			custom_profiles = custom_profiles.concat([
+				"heaac-5.1-dash",
+			]);
+		}
+	}
+
+	// Always add subtitles
+	custom_profiles = custom_profiles.concat([
 		"simplesdh",
 		"nflx-cmisc",
 		"BIF240",
-		"BIF320"
-	];
-
-	if (!globalOptions.disableVP9) {
-		custom_profiles = custom_profiles.concat([
-			"vp9-profile0-L30-dash-cenc",
-			"vp9-profile0-L31-dash-cenc",
-			"vp9-profile0-L40-dash-cenc",
-		]);
-	}
-
-	if (globalOptions.use6Channels) {
-		custom_profiles.push("heaac-5.1-dash");
-	}
+		"BIF320",
+	]);
 
 	return custom_profiles;
 }
