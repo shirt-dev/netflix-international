@@ -33,6 +33,7 @@ function restore_options() {
 		document.getElementById("showAllTracks").checked = items.showAllTracks;
 		document.getElementById("setMaxBitrate").checked = items.setMaxBitrate;
 		document.getElementById("disableVP9").checked = items.disableVP9;
+		document.getElementById("useDDPlus").checked = items.useDDPlus;
 	});
 }
 
