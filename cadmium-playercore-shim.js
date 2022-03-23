@@ -26,18 +26,15 @@ var cadmium_src = request.responseText;
 
 // eslint-disable-next-line no-unused-vars
 function get_profile_list() {
-	// Always add h264 profiles
+	// Always add h264 main profiles
 	var custom_profiles = [
 		"playready-h264mpl30-dash",
 		"playready-h264mpl31-dash",
 		"playready-h264mpl40-dash",
-		"playready-h264hpl30-dash",
-		"playready-h264hpl31-dash",
-		"playready-h264hpl40-dash",	
 	];
 
 	if (window.MSMediaKeys) {
-		// Chromium Edge Specific
+		// PlayReady Specific
 
 		// Always add 2.0 AAC profiles, some manifests fail without them
 		custom_profiles = custom_profiles.concat([
@@ -69,7 +66,12 @@ function get_profile_list() {
 
 		
 	} else {
-		// Chrome, Firefox Specific
+		// Widevine Specific
+		custom_profiles = custom_profiles.concat([
+			"playready-h264hpl30-dash",
+			"playready-h264hpl31-dash",
+			"playready-h264hpl40-dash",
+		]);
 
 		if (!globalOptions.disableVP9) {
 			// Add VP9 Profiles if wanted
