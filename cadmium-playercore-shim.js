@@ -110,6 +110,11 @@ function get_preferred_locale() {
 	return globalOptions.preferredLocale;
 }
 
+// eslint-disable-next-line no-unused-vars
+function get_preferred_text_locale() {
+	return globalOptions.preferredTextLocale;
+}
+
 do_patch(
 	"Hello world",
 	/(.*)/,
@@ -150,7 +155,7 @@ do_patch(
 do_patch(
 	"Set preferred text locale",
 	/preferredTextLocale:.\.preferredTextLocale/,
-	"preferredTextLocale: get_preferred_locale()"
+	"preferredTextLocale: get_preferred_text_locale()"
 );
 
 // run our patched copy of playercore in a non-privileged context on the page

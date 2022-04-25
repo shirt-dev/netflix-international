@@ -6,6 +6,7 @@ function save_options() {
 	const disableVP9 = document.getElementById("disableVP9").checked;
 	const useDDPlus = document.getElementById("useDDPlus").checked;
 	const preferredLocale = document.getElementById("preferredLocale").value;
+	const preferredTextLocale = document.getElementById("preferredTextLocale").value;
 
 	chrome.storage.sync.set({
 		use6Channels: use6Channels,
@@ -14,6 +15,7 @@ function save_options() {
 		disableVP9: disableVP9,
 		useDDPlus: useDDPlus,
 		preferredLocale: preferredLocale,
+		preferredTextLocale: preferredTextLocale,
 	}, function() {
 		var status = document.getElementById("status");
 		status.textContent = "Options saved.";
@@ -30,7 +32,8 @@ function restore_options() {
 		setMaxBitrate: false,
 		disableVP9: false,
 		useDDPlus: false,
-		preferredLocale: "en",
+		preferredLocale: null,
+		preferredTextLocale: null,
 	}, function(items) {
 		document.getElementById("use51").checked = items.use6Channels;
 		document.getElementById("showAllTracks").checked = items.showAllTracks;
@@ -38,6 +41,7 @@ function restore_options() {
 		document.getElementById("disableVP9").checked = items.disableVP9;
 		document.getElementById("useDDPlus").checked = items.useDDPlus;
 		document.getElementById("preferredLocale").value = items.preferredLocale;
+		document.getElementById("preferredTextLocale").value = items.preferredTextLocale;
 	});
 }
 
