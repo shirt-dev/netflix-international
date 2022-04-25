@@ -21,7 +21,33 @@ function save_options() {
 		status.textContent = "Options saved.";
 		setTimeout(function() {
 			status.textContent = "";
-		}, 750);
+		}, 2000);
+	});
+}
+
+function reset_options() {
+	document.getElementById("use51").checked = true;
+	document.getElementById("showAllTracks").checked = true;
+	document.getElementById("setMaxBitrate").checked = false;
+	document.getElementById("disableVP9").checked = false;
+	document.getElementById("useDDPlus").checked = false;
+	document.getElementById("preferredLocale").value = null;
+	document.getElementById("preferredTextLocale").value = null;
+
+	chrome.storage.sync.set({
+		use6Channels: true,
+		showAllTracks: true,
+		setMaxBitrate: false,
+		disableVP9: false,
+		useDDPlus: false,
+		preferredLocale: null,
+		preferredTextLocale: null,
+	}, function() {
+		var status = document.getElementById("status");
+		status.textContent = "Options reset.";
+		setTimeout(function() {
+			status.textContent = "";
+		}, 2000);
 	});
 }
 
@@ -47,3 +73,4 @@ function restore_options() {
 
 document.addEventListener("DOMContentLoaded", restore_options);
 document.getElementById("save").addEventListener("click", save_options);
+document.getElementById("reset").addEventListener("click", reset_options);
