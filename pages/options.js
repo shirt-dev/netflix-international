@@ -5,6 +5,7 @@ function save_options() {
 	const setMaxBitrate = document.getElementById("setMaxBitrate").checked;
 	const disableVP9 = document.getElementById("disableVP9").checked;
 	const useDDPlus = document.getElementById("useDDPlus").checked;
+	const preferredLocale = document.getElementById("preferredLocale").value;
 
 	chrome.storage.sync.set({
 		use6Channels: use6Channels,
@@ -12,6 +13,7 @@ function save_options() {
 		setMaxBitrate: setMaxBitrate,
 		disableVP9: disableVP9,
 		useDDPlus: useDDPlus,
+		preferredLocale: preferredLocale,
 	}, function() {
 		var status = document.getElementById("status");
 		status.textContent = "Options saved.";
@@ -28,12 +30,14 @@ function restore_options() {
 		setMaxBitrate: false,
 		disableVP9: false,
 		useDDPlus: false,
+		preferredLocale: "en",
 	}, function(items) {
 		document.getElementById("use51").checked = items.use6Channels;
 		document.getElementById("showAllTracks").checked = items.showAllTracks;
 		document.getElementById("setMaxBitrate").checked = items.setMaxBitrate;
 		document.getElementById("disableVP9").checked = items.disableVP9;
 		document.getElementById("useDDPlus").checked = items.useDDPlus;
+		document.getElementById("preferredLocale").value = items.preferredLocale;
 	});
 }
 

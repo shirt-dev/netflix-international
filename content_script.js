@@ -47,6 +47,7 @@ chromeStorageGet({
 	setMaxBitrate: false,
 	disableVP9: false,
 	useDDPlus: false,
+	preferredLocale: "en",
 }).then(items => {
 	// very messy workaround for accessing chrome storage outside of background / content scripts
 	let mainScript = document.createElement("script");

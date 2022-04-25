@@ -105,6 +105,11 @@ function get_profile_list() {
 	return custom_profiles;
 }
 
+// eslint-disable-next-line no-unused-vars
+function get_preferred_locale() {
+	return globalOptions.preferredLocale;
+}
+
 do_patch(
 	"Hello world",
 	/(.*)/,
@@ -135,6 +140,18 @@ if (globalOptions.showAllTracks) {
 		"\"showAllSubDubTracks\",!0"
 	);
 }
+
+do_patch(
+	"Set preferred audio locale",
+	/preferredAudioLocale:.\.preferredAudioLocale/,
+	"preferredAudioLocale: get_preferred_locale()"
+);
+
+do_patch(
+	"Set preferred text locale",
+	/preferredTextLocale:.\.preferredTextLocale/,
+	"preferredTextLocale: get_preferred_locale()"
+);
 
 // run our patched copy of playercore in a non-privileged context on the page
 window.Function(cadmium_src)();
