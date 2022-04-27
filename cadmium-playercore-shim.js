@@ -79,6 +79,9 @@ function get_profile_list() {
 				"vp9-profile0-L30-dash-cenc",
 				"vp9-profile0-L31-dash-cenc",
 				"vp9-profile0-L40-dash-cenc",
+				"av1-main-L30-dash-cbcs-prk",
+				"av1-main-L31-dash-cbcs-prk",
+				"av1-main-L40-dash-cbcs-prk",
 			]);
 		}
 
@@ -96,8 +99,10 @@ function get_profile_list() {
 
 	// Always add subtitles
 	custom_profiles = custom_profiles.concat([
+		"dfxp-ls-sdh",
 		"simplesdh",
 		"nflx-cmisc",
+		"imsc1.1",
 		"BIF240",
 		"BIF320",
 	]);
