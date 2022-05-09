@@ -2,6 +2,20 @@
 // This script runs as a drop-in replacement of the original cadmium-playercore. This is not a content script.
 console.log("Netflix International script active!");
 
+/* eslint-disable no-undef */
+// https://stackoverflow.com/a/45985333
+function getBrowser() {
+	if (typeof chrome !== "undefined") {
+		if (typeof browser !== "undefined") {
+			return "Firefox";
+		} else {
+			return "Chrome";
+		}
+	} else {
+		return "Edge";
+	}
+}
+
 function do_patch(desc, needle, replacement) {
 	var match = cadmium_src.match(needle);
 	if (!match) {
@@ -79,10 +93,15 @@ function get_profile_list() {
 				"vp9-profile0-L30-dash-cenc",
 				"vp9-profile0-L31-dash-cenc",
 				"vp9-profile0-L40-dash-cenc",
-				"av1-main-L30-dash-cbcs-prk",
-				"av1-main-L31-dash-cbcs-prk",
-				"av1-main-L40-dash-cbcs-prk",
 			]);
+
+			if (getBrowser() == "Chrome") {
+				custom_profiles = custom_profiles.concat([
+					"av1-main-L30-dash-cbcs-prk",
+					"av1-main-L31-dash-cbcs-prk",
+					"av1-main-L40-dash-cbcs-prk",
+				]);
+			}
 		}
 
 		custom_profiles = custom_profiles.concat([
