@@ -94,14 +94,6 @@ function get_profile_list() {
 				"vp9-profile0-L31-dash-cenc",
 				"vp9-profile0-L40-dash-cenc",
 			]);
-
-			if (getBrowser() == "Chrome") {
-				custom_profiles = custom_profiles.concat([
-					"av1-main-L30-dash-cbcs-prk",
-					"av1-main-L31-dash-cbcs-prk",
-					"av1-main-L40-dash-cbcs-prk",
-				]);
-			}
 		}
 
 		custom_profiles = custom_profiles.concat([
