@@ -46,6 +46,7 @@ chromeStorageGet({
 	showAllTracks: true,
 	setMaxBitrate: false,
 	disableVP9: false,
+	disableAV1: true,
 	useDDPlus: false,
 	preferredLocale: null,
 	preferredTextLocale: null,

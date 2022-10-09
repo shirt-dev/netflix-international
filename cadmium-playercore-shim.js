@@ -39,86 +39,77 @@ request.send();
 var cadmium_src = request.responseText;
 
 // eslint-disable-next-line no-unused-vars
-function get_profile_list() {
+function get_profile_list(original_profiles) {
+	var profiles = original_profiles;
 	// Always add h264 main profiles
-	var custom_profiles = [
-		"playready-h264mpl30-dash",
-		"playready-h264mpl31-dash",
-		"playready-h264mpl40-dash",
-	];
-
-	if (window.MSMediaKeys) {
-		// PlayReady Specific
-
-		// Always add 2.0 AAC profiles, some manifests fail without them
-		custom_profiles = custom_profiles.concat([
-			"heaac-2-dash",
-			"heaac-2hq-dash",
+	if (original_profiles.includes("playready-h264mpl30-dash")) {
+		profiles = profiles.concat([
+			"playready-h264mpl30-dash",
+			"playready-h264mpl31-dash",
+			"playready-h264mpl40-dash",
 		]);
+	}
 
-		if (globalOptions.useDDPlus) {
-			// Dolby Digital
-			custom_profiles = custom_profiles.concat([
-				"ddplus-2.0-dash",
-			]);
-
-			if (globalOptions.use6Channels) {
-				custom_profiles = custom_profiles.concat([
-					"ddplus-5.1-dash",
-					"ddplus-5.1hq-dash",
-					"ddplus-atmos-dash",
-				]);
-			}
-		} else {
-			// No Dolby Digital
-			if (globalOptions.use6Channels) {
-				custom_profiles = custom_profiles.concat([
-					"heaac-5.1-dash",
-				]);
-			}
-		}
-
-		
-	} else {
-		// Widevine Specific
-		custom_profiles = custom_profiles.concat([
+	if (original_profiles.includes("playready-h264hpl30-dash")) {
+		profiles = profiles.concat([
 			"playready-h264hpl30-dash",
 			"playready-h264hpl31-dash",
 			"playready-h264hpl40-dash",
 		]);
+	}
 
-		if (!globalOptions.disableVP9) {
-			// Add VP9 Profiles if wanted
-			custom_profiles = custom_profiles.concat([
-				"vp9-profile0-L30-dash-cenc",
-				"vp9-profile0-L31-dash-cenc",
-				"vp9-profile0-L40-dash-cenc",
-			]);
-		}
+	if (original_profiles.includes("h264hpl30-dash-playready-live")) {
+		profiles = profiles.concat([
+			"h264hpl30-dash-playready-live",
+			"h264hpl31-dash-playready-live",
+			"h264hpl40-dash-playready-live",
+		]);
+	}
 
-		custom_profiles = custom_profiles.concat([
-			"heaac-2-dash",
-			"heaac-2hq-dash",
+	if (!globalOptions.disableVP9 && original_profiles.includes("vp9-profile0-L30-dash-cenc")) {
+		profiles = profiles.concat([
+			"vp9-profile0-L30-dash-cenc",
+			"vp9-profile0-L31-dash-cenc",
+			"vp9-profile0-L40-dash-cenc",
+		]);
+	} else {
+		profiles = profiles.filter(val => !val.includes("vp9-"));
+	}
+
+	if (!globalOptions.disableAV1 && original_profiles.includes("av1-main-L30-dash-cbcs-prk")) {
+		profiles = profiles.concat([
+			"av1-main-L30-dash-cbcs-prk",
+			"av1-main-L31-dash-cbcs-prk",
+			"av1-main-L40-dash-cbcs-prk",
+		]);
+	} else {
+		profiles = profiles.filter(val => !val.includes("av1-"));
+	}
+
+	if (globalOptions.useDDPlus && MediaSource.isTypeSupported('audio/mp4; codecs="ec-3"')) {
+		// Dolby Digital
+		profiles = profiles.concat([
+			"ddplus-2.0-dash",
 		]);
 
 		if (globalOptions.use6Channels) {
-			custom_profiles = custom_profiles.concat([
+			profiles = profiles.concat([
+				"ddplus-5.1-dash",
+				"ddplus-5.1hq-dash",
+				"ddplus-atmos-dash",
+			]);
+		}
+	} else {
+		// No Dolby Digital
+		if (globalOptions.use6Channels) {
+			profiles = profiles.concat([
 				"heaac-5.1-dash",
 			]);
 		}
 	}
 
-	// Always add subtitles
-	custom_profiles = custom_profiles.concat([
-		"dfxp-ls-sdh",
-		"simplesdh",
-		"nflx-cmisc",
-		"imsc1.1",
-		"BIF240",
-		"BIF320",
-	]);
-
-	return custom_profiles;
+	profiles = [...new Set(profiles)].sort();
+	return profiles;
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -139,14 +130,14 @@ do_patch(
 
 do_patch(
 	"Custom profiles",
-	/(viewableId:.,profiles:).,/,
-	"$1 get_profile_list(),"
+	/(viewableId:.,profiles:)(.),/,
+	"$1 get_profile_list($2),"
 );
 
 do_patch(
 	"Custom profiles 2",
-	/(name:"default",profiles:).}/,
-	"$1 get_profile_list()}"
+	/(name:"default",profiles:)(.)}/,
+	"$1 get_profile_list($2)}"
 );
 
 do_patch(

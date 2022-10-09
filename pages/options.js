@@ -4,6 +4,7 @@ function save_options() {
 	const showAllTracks = document.getElementById("showAllTracks").checked;
 	const setMaxBitrate = document.getElementById("setMaxBitrate").checked;
 	const disableVP9 = document.getElementById("disableVP9").checked;
+	const disableAV1 = document.getElementById("disableAV1").checked;
 	const useDDPlus = document.getElementById("useDDPlus").checked;
 	const preferredLocale = document.getElementById("preferredLocale").value;
 	const preferredTextLocale = document.getElementById("preferredTextLocale").value;
@@ -13,6 +14,7 @@ function save_options() {
 		showAllTracks: showAllTracks,
 		setMaxBitrate: setMaxBitrate,
 		disableVP9: disableVP9,
+		disableAV1: disableAV1,
 		useDDPlus: useDDPlus,
 		preferredLocale: preferredLocale,
 		preferredTextLocale: preferredTextLocale,
@@ -30,6 +32,7 @@ function reset_options() {
 	document.getElementById("showAllTracks").checked = true;
 	document.getElementById("setMaxBitrate").checked = false;
 	document.getElementById("disableVP9").checked = false;
+	document.getElementById("disableAV1").checked = true;
 	document.getElementById("useDDPlus").checked = false;
 	document.getElementById("preferredLocale").value = null;
 	document.getElementById("preferredTextLocale").value = null;
@@ -39,6 +42,7 @@ function reset_options() {
 		showAllTracks: true,
 		setMaxBitrate: false,
 		disableVP9: false,
+		disableAV1: true,
 		useDDPlus: false,
 		preferredLocale: null,
 		preferredTextLocale: null,
@@ -57,6 +61,7 @@ function restore_options() {
 		showAllTracks: true,
 		setMaxBitrate: false,
 		disableVP9: false,
+		disableAV1: true,
 		useDDPlus: false,
 		preferredLocale: null,
 		preferredTextLocale: null,
@@ -65,6 +70,7 @@ function restore_options() {
 		document.getElementById("showAllTracks").checked = items.showAllTracks;
 		document.getElementById("setMaxBitrate").checked = items.setMaxBitrate;
 		document.getElementById("disableVP9").checked = items.disableVP9;
+		document.getElementById("disableAV1").checked = items.disableAV1;
 		document.getElementById("useDDPlus").checked = items.useDDPlus;
 		document.getElementById("preferredLocale").value = items.preferredLocale;
 		document.getElementById("preferredTextLocale").value = items.preferredTextLocale;
