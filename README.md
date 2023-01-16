@@ -9,3 +9,4 @@ Contact me on discord: shirt#1337
 # Based on the following extensions
 - https://github.com/DavidBuchanan314/Turbo-Recadmiumator
 - https://github.com/truedread/netflix-1080p
+- https://github.com/lkmvip/netflix-4K-DDplus

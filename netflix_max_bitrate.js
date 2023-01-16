@@ -5,17 +5,32 @@ let getElementByXPath = function (xpath) {
 	).singleNodeValue;
 };
 
-const fn = function () {
-	window.dispatchEvent(new KeyboardEvent("keydown", {
+let fn = function () {
+	const VIDEO_SELECT = getElementByXPath("//div[text()='Video Bitrate']");
+	const AUDIO_SELECT = getElementByXPath("//div[text()='Audio Bitrate']");
+	const BUTTON = getElementByXPath("//button[text()='Override']");
+
+	const videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer;
+	if(!videoPlayer) {
+		console.log("API Not Loading!");
+		return false;
+	}
+	const player = videoPlayer.getVideoPlayerBySessionId(videoPlayer.getAllPlayerSessionIds()[0]);
+	if(!player) {
+		console.log("Video Not Loading!");
+		return false;
+	}
+	if(!player.isPlaying()) {
+		console.log("Video Not Playing!");
+		return false;
+	}
+
+	window.dispatchEvent(new KeyboardEvent('keydown', {
 		keyCode: 83,
 		ctrlKey: true,
 		altKey: true,
 		shiftKey: true,
 	}));
-
-	const VIDEO_SELECT = getElementByXPath("//div[text()='Video Bitrate']");
-	const AUDIO_SELECT = getElementByXPath("//div[text()='Audio Bitrate']");
-	const BUTTON = getElementByXPath("//button[text()='Override']");
 
 	if (!(VIDEO_SELECT && AUDIO_SELECT && BUTTON)){
 		return false;
@@ -24,40 +39,46 @@ const fn = function () {
 	[VIDEO_SELECT, AUDIO_SELECT].forEach(function (el) {
 		let parent = el.parentElement;
 
-		let options = parent.querySelectorAll("select > option");
+		let options = parent.querySelectorAll('select > option');
 
 		for (var i = 0; i < options.length - 1; i++) {
-			options[i].removeAttribute("selected");
+			options[i].removeAttribute('selected');
 		}
 
-		options[options.length - 1].setAttribute("selected", "selected");
+		options[options.length - 1].setAttribute('selected', 'selected');
 	});
 
+	console.log("Video Playing!");
 	BUTTON.click();
 
 	return true;
 };
 
 let run = function () {
-	if (!fn()) {
-		setTimeout(run, 100);
-	}
+	fn() || setTimeout(run, 100)	
 };
 
 const WATCH_REGEXP = /netflix.com\/watch\/.*/;
 
 let oldLocation;
 
-if(globalOptions.setMaxBitrate) {
+if (window.globalOptions === undefined) {
+    try {
+        window.globalOptions = JSON.parse(document.getElementById("netflix-intl-settings").innerText);
+    } catch(e) {
+        console.error("Could not load settings:", e);
+    }
+}
+if(window.globalOptions.setMaxBitrate ) {
 	console.log("netflix_max_bitrate.js enabled");
+	//setInterval(test, 500);
 	setInterval(function () {
+		
 		let newLocation = window.location.toString();
 
 		if (newLocation !== oldLocation) {
 			oldLocation = newLocation;
-			if (WATCH_REGEXP.test(newLocation)) {
-				run();
-			}
+			WATCH_REGEXP.test(newLocation) && run();
 		}
-	}, 500);
+  }, 500);
 }

@@ -31,44 +31,32 @@ function chromeStorageGet(opts) {
 	}
 }
 
-function attachScript(resp) {
-	let xhr = resp.target;
-	let mainScript = document.createElement("script");
-	mainScript.type = "application/javascript";
-	if (xhr.status == 200) {
-		mainScript.text = xhr.responseText;
-		document.documentElement.appendChild(mainScript);
-	}
-}
-
 chromeStorageGet({
 	use6Channels: true,
 	showAllTracks: true,
 	setMaxBitrate: false,
 	disableVP9: false,
 	disableAV1: true,
+	disableHPL: false,
 	useDDPlus: false,
 	preferredLocale: null,
 	preferredTextLocale: null,
 }).then(items => {
 	// very messy workaround for accessing chrome storage outside of background / content scripts
 	let mainScript = document.createElement("script");
-	mainScript.type = "application/javascript";
-	mainScript.text = `var globalOptions = JSON.parse('${JSON.stringify(items)}');`; 
+	mainScript.type = "application/json";
+	mainScript.id = "netflix-intl-settings";
+	mainScript.text = JSON.stringify(items); 
 	document.documentElement.appendChild(mainScript);
 }).then(() => {
 	// attach and include additional scripts after we have loaded the main configuration
-	for (let i = 0; i < script_urls.length; i++) {
-		let script = document.createElement("script");
-		script.src = script_urls[i];
-		document.documentElement.appendChild(script);
-	}
 
 	for (let i = 0; i < urls.length; i++) {
-		let mainScriptUrl = chrome.extension.getURL(urls[i]);
-		let xhr = new XMLHttpRequest();
-		xhr.open("GET", mainScriptUrl, true);
-		xhr.onload = attachScript;
-		xhr.send();
+		const mainScriptUrl = chrome.runtime.getURL(urls[i]);
+		
+		const mainScript = document.createElement('script');
+        mainScript.type = 'application/javascript';
+        mainScript.src = mainScriptUrl;
+        document.documentElement.appendChild(mainScript);
 	}
 });

@@ -14,11 +14,6 @@ function getBrowser() {
 
 chrome.webRequest.onBeforeRequest.addListener(
 	function (details) {
-		/* Allow our shim to load an untouched copy */
-		if (details.url.endsWith("?no_filter")) {
-			return {};
-		}
-		
 		if (getBrowser() == "Chrome") {
 			return { redirectUrl: chrome.runtime.getURL("cadmium-playercore-shim.js") };
 		}
@@ -46,6 +41,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 		urls: [
 			"*://assets.nflxext.com/*/ffe/player/html/*",
 			"*://www.assets.nflxext.com/*/ffe/player/html/*"
-		]
+		],
+		types: ["script"]
 	}, ["blocking"]
 );
