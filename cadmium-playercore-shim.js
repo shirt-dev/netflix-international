@@ -126,16 +126,6 @@ function get_profile_list(original_profiles) {
 	return profiles;
 }
 
-// eslint-disable-next-line no-unused-vars
-function get_preferred_locale() {
-	return globalOptions.preferredLocale;
-}
-
-// eslint-disable-next-line no-unused-vars
-function get_preferred_text_locale() {
-	return globalOptions.preferredTextLocale;
-}
-
 do_patch(
 	"Hello world",
 	/(.*)/,
@@ -170,14 +160,28 @@ if (globalOptions.showAllTracks) {
 do_patch(
 	"Set preferred audio locale",
 	/preferredAudioLocale:.\.preferredAudioLocale/,
-	"preferredAudioLocale: get_preferred_locale()"
+	"preferredAudioLocale: globalOptions.preferredLocale"
 );
 
 do_patch(
 	"Set preferred text locale",
 	/preferredTextLocale:.\.preferredTextLocale/,
-	"preferredTextLocale: get_preferred_text_locale()"
+	"preferredTextLocale: globalOptions.preferredTextLocale"
 );
+
+if(globalOptions.useDDPlus) {
+	do_patch(
+		"Select highest audio bitrate 1",
+		/(indexOf\(z\))(\?[^?]+)/,
+		"$1)"
+	);
+
+	do_patch(
+		"Select highest audio bitrate 2",
+		/(var\sx;if\(this\.[^\)]+)/,
+		"$1 && !globalOptions.useDDPlus"
+	);
+}
 
 // run our patched copy of playercore in a non-privileged context on the page
 window.Function(cadmium_src)();
