@@ -169,11 +169,11 @@ do_patch(
 	"preferredTextLocale: globalOptions.preferredTextLocale"
 );
 
-if(globalOptions.useDDPlus) {
+if(globalOptions.useDDPlus && MediaSource.isTypeSupported('audio/mp4; codecs="ec-3"')) {
 	do_patch(
 		"Select highest audio bitrate 1",
-		/(indexOf\(z\))(\?[^?]+)/,
-		"$1)"
+		/(indexOf\(.\))(\?[^?]+)(\?[0-9]:)/,
+		"$1)$3"
 	);
 
 	do_patch(
