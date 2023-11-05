@@ -100,27 +100,11 @@ function get_profile_list(original_profiles) {
 		profiles = profiles.filter(val => !val.includes("av1-"));
 	}
 
-	if (globalOptions.useDDPlus && MediaSource.isTypeSupported('audio/mp4; codecs="ec-3"')) {
-		// Dolby Digital
-		profiles = profiles.concat([
-			"ddplus-2.0-dash",
-		]);
-
-		if (globalOptions.use6Channels) {
-			profiles = profiles.concat([
-				"ddplus-5.1-dash",
-				"ddplus-5.1hq-dash",
-				"ddplus-atmos-dash",
-			]);
-		}
-	} else {
-		// No Dolby Digital
-		if (globalOptions.use6Channels) {
-			profiles = profiles.concat([
-				"heaac-5.1-dash",
-			]);
-		}
-	}
+    if (globalOptions.use6Channels) {
+        profiles = profiles.concat([
+            "heaac-5.1-dash",
+        ]);
+    }
 
 	profiles = [...new Set(profiles)].sort();
 	return profiles;
@@ -168,20 +152,6 @@ do_patch(
 	/preferredTextLocale:.\.preferredTextLocale/,
 	"preferredTextLocale: globalOptions.preferredTextLocale"
 );
-
-if(globalOptions.useDDPlus && MediaSource.isTypeSupported('audio/mp4; codecs="ec-3"')) {
-	do_patch(
-		"Select highest audio bitrate 1",
-		/(indexOf\(.\))(\?[^?]+)(\?[0-9]:)/,
-		"$1)$3"
-	);
-
-	do_patch(
-		"Select highest audio bitrate 2",
-		/(var\sx;if\(this\.[^\)]+)/,
-		"$1 && !globalOptions.useDDPlus"
-	);
-}
 
 // run our patched copy of playercore in a non-privileged context on the page
 window.Function(cadmium_src)();

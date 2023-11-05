@@ -6,7 +6,6 @@ function save_options() {
 	const disableVP9 = document.getElementById("disableVP9").checked;
 	const disableAV1 = document.getElementById("disableAV1").checked;
 	const disableHPL = document.getElementById("disableHPL").checked;
-	const useDDPlus = document.getElementById("useDDPlus").checked;
 	const preferredLocale = document.getElementById("preferredLocale").value;
 	const preferredTextLocale = document.getElementById("preferredTextLocale").value;
 
@@ -17,7 +16,6 @@ function save_options() {
 		disableVP9: disableVP9,
 		disableAV1: disableAV1,
 		disableHPL: disableHPL,
-		useDDPlus: useDDPlus,
 		preferredLocale: preferredLocale,
 		preferredTextLocale: preferredTextLocale,
 	}, function() {
@@ -36,7 +34,6 @@ function reset_options() {
 	document.getElementById("disableVP9").checked = false;
 	document.getElementById("disableAV1").checked = true;
 	document.getElementById("disableHPL").checked = false;
-	document.getElementById("useDDPlus").checked = false;
 	document.getElementById("preferredLocale").value = null;
 	document.getElementById("preferredTextLocale").value = null;
 
@@ -47,7 +44,6 @@ function reset_options() {
 		disableVP9: false,
 		disableAV1: true,
 		disableHPL: false,
-		useDDPlus: false,
 		preferredLocale: null,
 		preferredTextLocale: null,
 	}, function() {
@@ -67,7 +63,6 @@ function restore_options() {
 		disableVP9: false,
 		disableAV1: true,
 		disableHPL: false,
-		useDDPlus: false,
 		preferredLocale: null,
 		preferredTextLocale: null,
 	}, function(items) {
@@ -77,7 +72,6 @@ function restore_options() {
 		document.getElementById("disableVP9").checked = items.disableVP9;
 		document.getElementById("disableAV1").checked = items.disableAV1;
 		document.getElementById("disableHPL").checked = items.disableHPL;
-		document.getElementById("useDDPlus").checked = items.useDDPlus;
 		document.getElementById("preferredLocale").value = items.preferredLocale;
 		document.getElementById("preferredTextLocale").value = items.preferredTextLocale;
 	});
