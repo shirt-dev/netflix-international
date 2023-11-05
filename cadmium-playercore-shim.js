@@ -145,7 +145,7 @@ do_patch(
 );
 
 do_patch(
-	"Re-enable Ctrl+Shift+Alt+S menu",
+	"Re-enable Ctrl+Shift+Alt+B menu",
 	/this\...\....\s*&&\s*this\.toggle\(\);/,
 	"this.toggle();"
 );
