@@ -40,7 +40,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 	}, {
 		urls: [
 			"*://assets.nflxext.com/*/ffe/player/html/*",
-			"*://www.assets.nflxext.com/*/ffe/player/html/*"
+			"*://assets.nflxext.com/player/html/ffe/*"
 		],
 		types: ["script"]
 	}, ["blocking"]

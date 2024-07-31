@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Netflix International",
 	"description": "Displays all available Netflix audio and subtitle tracks.",
-	"version": "2.0.21",
+	"version": "2.0.22",
 	"author": "shirt",
 	"browser_action": {
 	  "default_icon": "img/icon128.png",
@@ -19,8 +19,7 @@
 	},
 	"content_scripts": [{
 	  "matches": [
-		"*://assets.nflxext.com/*/ffe/player/html/*",
-		"*://www.assets.nflxext.com/*/ffe/player/html/*",
+		"*://assets.nflxext.com/*",
 		"*://netflix.com/*",
 		"*://www.netflix.com/*"
 	  ],
@@ -45,8 +44,7 @@
 	  "storage",
 	  "webRequest",
 	  "webRequestBlocking",
-	  "*://assets.nflxext.com/*/ffe/player/html/*",
-	  "*://www.assets.nflxext.com/*/ffe/player/html/*",
+	  "*://assets.nflxext.com/*",
 	  "*://netflix.com/*",
 	  "*://www.netflix.com/*"
 	]
