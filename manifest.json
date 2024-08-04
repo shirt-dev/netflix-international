@@ -1,10 +1,10 @@
 {
-	"manifest_version": 2,
+	"manifest_version": 3,
 	"name": "Netflix International",
 	"description": "Displays all available Netflix audio and subtitle tracks.",
-	"version": "2.0.22",
+	"version": "2.0.23",
 	"author": "shirt",
-	"browser_action": {
+	"action": {
 	  "default_icon": "img/icon128.png",
 	  "default_popup": "pages/options.html"
 	},
@@ -19,7 +19,6 @@
 	},
 	"content_scripts": [{
 	  "matches": [
-		"*://assets.nflxext.com/*",
 		"*://netflix.com/*",
 		"*://www.netflix.com/*"
 	  ],
@@ -28,22 +27,34 @@
 	  "js": ["content_script.js"],
 	  "run_at": "document_start"
 	}],
-	"background": {
-	  "scripts": ["background.js"]
-	},
 	"options_ui": {
 	  "page": "pages/options.html",
 	  "open_in_tab": true
 	},
-	"web_accessible_resources": [
-	  "cadmium-playercore-shim.js",
-	  "netflix_max_bitrate.js",
-	  "netflix.css"
-	],
+	"web_accessible_resources": [{
+		"resources": [
+			"cadmium-playercore-shim.js",
+			"netflix_max_bitrate.js",
+			"netflix.css"
+		],
+		"matches": [
+			"*://assets.nflxext.com/*",
+			"*://netflix.com/*",
+			"*://www.netflix.com/*"
+		]
+	}],
+	"declarative_net_request" : {
+		"rule_resources" : [{
+			"id": "1",
+			"enabled": true,
+			"path": "rules.json"
+		}]
+	},
 	"permissions": [
 	  "storage",
-	  "webRequest",
-	  "webRequestBlocking",
+	  "declarativeNetRequestWithHostAccess"
+	],
+	"host_permissions": [
 	  "*://assets.nflxext.com/*",
 	  "*://netflix.com/*",
 	  "*://www.netflix.com/*"

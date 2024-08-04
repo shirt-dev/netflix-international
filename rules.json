@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "priority": 1,
+        "action": {
+            "type": "redirect",
+            "redirect": { "extensionPath": "/cadmium-playercore-shim.js" }
+        },
+        "condition": {
+            "urlFilter": "*://assets.nflxext.com/*/ffe/player/html/*",
+            "resourceTypes": ["script"]
+        }
+    },
+    {
+        "id": 2,
+        "priority": 1,
+        "action": {
+            "type": "redirect",
+            "redirect": { "extensionPath": "/cadmium-playercore-shim.js" }
+        },
+        "condition": {
+            "urlFilter": "*://assets.nflxext.com/player/html/ffe/*",
+            "resourceTypes": ["script"]
+        }
+    }
+]

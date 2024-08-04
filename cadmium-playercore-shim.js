@@ -41,7 +41,7 @@ function do_patch(desc, needle, replacement) {
 the response before the body of this script finishes executing */
 var request = new XMLHttpRequest();
 var cadmium_url = document.getElementById("player-core-js").src;
-request.open("GET", cadmium_url + "?no_filter", false); // synchronous
+request.open("GET", cadmium_url, false); // synchronous
 request.send();
 
 var cadmium_src = request.responseText;
