@@ -50,16 +50,14 @@ var cadmium_src = request.responseText;
 function get_profile_list(original_profiles) {
 	var profiles = original_profiles;
 	// Always add h264 main profiles
-	if (original_profiles.includes("playready-h264mpl30-dash")) {
-		profiles = profiles.concat([
-			"playready-h264mpl30-dash",
-			"playready-h264mpl31-dash",
-			"playready-h264mpl40-dash",
-			"h264mpl30-dash-playready-prk-qc",
-			"h264mpl31-dash-playready-prk-qc",
-			"h264mpl40-dash-playready-prk-qc",
-		]);
-	}
+    profiles = profiles.concat([
+        "playready-h264mpl30-dash",
+        "playready-h264mpl31-dash",
+        "playready-h264mpl40-dash",
+        "h264mpl30-dash-playready-prk-qc",
+        "h264mpl31-dash-playready-prk-qc",
+        "h264mpl40-dash-playready-prk-qc",
+    ]);
 
 	if (!globalOptions.disableHPL) {
 		if (original_profiles.includes("playready-h264hpl30-dash")) {
@@ -95,6 +93,7 @@ function get_profile_list(original_profiles) {
 			"av1-main-L30-dash-cbcs-prk",
 			"av1-main-L31-dash-cbcs-prk",
 			"av1-main-L40-dash-cbcs-prk",
+            "av1-main-L41-dash-cbcs-prk",
 		]);
 	} else {
 		profiles = profiles.filter(val => !val.includes("av1-"));
