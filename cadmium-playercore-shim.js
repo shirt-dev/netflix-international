@@ -27,7 +27,7 @@ function getBrowser() {
 function do_patch(desc, needle, replacement) {
 	var match = cadmium_src.match(needle);
 	if (!match) {
-		alert("Failed to find patch: " + JSON.stringify(desc));
+		console.error("Failed to find patch: " + JSON.stringify(desc));
 	} else {
 		cadmium_src = cadmium_src.replace(needle, replacement);
 		console.log("[+] Patched: " + JSON.stringify(desc));
@@ -129,8 +129,14 @@ do_patch(
 
 do_patch(
 	"Re-enable Ctrl+Shift+Alt+B menu",
-	/this\...\....\s*&&\s*this\.toggle\(\);/,
+	/this\..{1,4}\..{1,4}\s&&\sthis\.toggle\(\);/,
 	"this.toggle();"
+);
+
+do_patch(
+	"Fix bitrate override menu selection",
+	/(\(.=.\.disallowedBy,)[^!]+/,
+	"$1"
 );
 
 if (globalOptions.showAllTracks) {
